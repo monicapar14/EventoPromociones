@@ -39,4 +39,13 @@ insert into productos (nombre, descripcion, precio) values ('Tanque para agua', 
 insert into productos (nombre, descripcion, precio) values ('Motobomba de agua', 'Equipo para extracción y riego.', '3200');
 
 
+//descuentos servicios
+insert into descuentos_servicios (cant_min, precio_minimo, descuento) values (2, 1500, 0.03);
 
+//descuento productos
+insert into descuentos_productos (cant_min, precio_minimo, descuento) values (3, 0, 0.03);
+insert into descuentos_productos (cant_min, precio_minimo, descuento) values (5, 0, 0.05);
+
+
+//cupo del evento
+insert into evento_cupo (nombre_evento, cupo_maximo) values ('Evento de Promociones', 45);

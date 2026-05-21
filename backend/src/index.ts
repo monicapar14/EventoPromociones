@@ -13,6 +13,7 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 8080
 
+// Rutas de servicios
 app.use('/api/servicios', serviciosRouter)
 
 app.listen(PORT, () => {
