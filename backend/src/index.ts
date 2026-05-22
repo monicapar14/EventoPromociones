@@ -6,6 +6,7 @@ import serviciosRouter from './routes/servicios'
 import productosRouter from './routes/productos'
 import confirmacionesRouter from './routes/confirmaciones'
 import infoEventoRouter from './routes/infoEvento'
+import confirmaciones from './routes/confirmaciones'
 
 dotenv.config()
 
@@ -27,6 +28,9 @@ app.use('/api/confirmaciones', confirmacionesRouter)
 
 //Ruta de cupos
 app.use('/api/cupos', infoEventoRouter)
+
+//Ruta de confirmaciones
+app.use('/api/confirmaciones', confirmaciones)
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)
