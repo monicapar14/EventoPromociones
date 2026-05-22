@@ -15,7 +15,7 @@ Create table Productos(
     precio DECIMAL(10, 2) NOT NULL
 );
 
-Create table Confirmación(
+Create table Confirmacion(
     id_confirmacion INT PRIMARY KEY AUTO_INCREMENT,
     nombres VARCHAR(255) NOT NULL,
     apellidos VARCHAR(255) NOT NULL,
@@ -41,12 +41,18 @@ Create table Productos_seleccionados(
     FOREIGN KEY (id_producto) REFERENCES Productos(id_producto)
 );
 
-Create table Descuentos(
+Create table Descuentos_Servicios(
     id_descuento INT PRIMARY KEY AUTO_INCREMENT,
-    eleccion VARCHAR(255) NOT NULL,
-    cant_servicios INT,
+    cant_min INT,
     precio_minimo DECIMAL(10, 2),
-    descuento_servicio DECIMAL(10, 2)
+    descuento DECIMAL(10, 2)
+); 
+
+Create table Descuentos_Productos(
+    id_descuento INT PRIMARY KEY AUTO_INCREMENT,
+    cant_min INT,
+    precio_minimo DECIMAL(10, 2),
+    descuento DECIMAL(10, 2)
 ); 
 
 Create table Evento_Cupo(
