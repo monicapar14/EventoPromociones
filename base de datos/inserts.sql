@@ -50,3 +50,12 @@ INSERT INTO `evento_promociones`.`desc_consultas` (`id`, `id_consulta`, `campoC`
 
 //cupo del evento
 insert into evento_cupo (nombre_evento, cupo_maximo) values ('Evento de Promociones', 45);
+
+//confirmaciones
+INSERT INTO `evento_promociones`.`confirmacion` (`id_confirmacion`, `nombres`, `apellidos`, `email`,`fecha_confirmacion`, `descuento_servicio`)VALUES('1', 'Mónica', 'Par', 'monicapar14@gmail.com','2026-05-21', 0.03);
+
+//producto seleccionado 
+INSERT INTO `evento_promociones`.`productos_seleccionados` (`id_seleccionado`, `id_confirmacion`, `id_producto`) VALUES ('1', '1', '2');
+
+//servicio seleccionado
+INSERT INTO `evento_promociones`.`servicios_seleccionados` (`id_seleccionado`, `id_confirmacion`, `id_servicio`) VALUES ('1', '1', '2');

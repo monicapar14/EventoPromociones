@@ -26,7 +26,7 @@ Create table Confirmacion(
 );  
 
 Create table Servicios_seleccionados(
-    id_servicio_seleccionado INT PRIMARY KEY AUTO_INCREMENT,
+    id_seleccionado INT PRIMARY KEY AUTO_INCREMENT,
     id_confirmacion INT,
     id_servicio INT,
     FOREIGN KEY (id_confirmacion) REFERENCES Confirmacion(id_confirmacion),
@@ -34,7 +34,7 @@ Create table Servicios_seleccionados(
 );
 
 Create table Productos_seleccionados(
-    id_producto_seleccionado INT PRIMARY KEY AUTO_INCREMENT,
+    id_seleccionado INT PRIMARY KEY AUTO_INCREMENT,
     id_confirmacion INT,
     id_producto INT,
     FOREIGN KEY (id_confirmacion) REFERENCES Confirmacion(id_confirmacion),
@@ -60,3 +60,5 @@ create table desc_Consultas(
     descuento DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (id_consulta) references consultas(id_consulta)
 );
+
+

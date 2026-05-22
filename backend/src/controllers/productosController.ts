@@ -16,7 +16,7 @@ export const getProductos = async (req: Request, res: Response) => {
 //obtener los descuentos para los productos disponibles
 export const getDescuentosProductos = async (req: Request, res: Response) => {
   try {
-    const [rows] = await pool.query('SELECT id_consulta, campoC, campoP, descuento FROM desc_consultas WHERE id_consulta = req.params.id_consulta')
+    const [rows] = await pool.query('SELECT id_consulta, campoC, campoP, descuento FROM desc_consultas WHERE id_consulta = 2')
     res.json(rows)
   } catch (error) {
     console.error('Error al obtener los descuentos:', error)

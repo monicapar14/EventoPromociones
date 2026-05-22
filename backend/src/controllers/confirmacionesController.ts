@@ -4,7 +4,7 @@ import pool from '../db'
 //obtener las confirmaciones que van
 export const getCantConfirmaciones = async (req: Request, res: Response) => {
   try {
-    const [rows] = await pool.query('SELECT count(*) FROM confirmación') // quitar tilde 
+    const [rows] = await pool.query('SELECT count(*) as cantidad FROM confirmacion') // quitar tilde 
     res.json(rows)
   } catch (error) {
     console.error('Error al obtener las confirmaciones:', error)
