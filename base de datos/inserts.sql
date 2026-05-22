@@ -38,14 +38,15 @@ insert into productos (nombre, descripcion, precio) values ('Botas de hule', 'Ca
 insert into productos (nombre, descripcion, precio) values ('Tanque para agua', 'Depósito plástico para almacenamiento.', '1800');
 insert into productos (nombre, descripcion, precio) values ('Motobomba de agua', 'Equipo para extracción y riego.', '3200');
 
+//consulta 
+INSERT INTO `evento_promociones`.`consultas` (`id_consulta`, `nombre_consulta`) VALUES ('1', 'Servicio');
+INSERT INTO `evento_promociones`.`consultas` (`id_consulta`, `nombre_consulta`) VALUES ('2', 'Producto');
 
-//descuentos servicios
-insert into descuentos_servicios (cant_min, precio_minimo, descuento) values (2, 1500, 0.03);
-
-//descuento productos
-insert into descuentos_productos (cant_min, precio_minimo, descuento) values (3, 0, 0.03);
-insert into descuentos_productos (cant_min, precio_minimo, descuento) values (5, 0, 0.05);
-
+//descuentos en los servicios y productos
+INSERT INTO `evento_promociones`.`desc_consultas` (`id`, `id_consulta`, `campoC`, `descuento`) VALUES ('1', '1', '2',  '0.03');
+INSERT INTO `evento_promociones`.`desc_consultas` (`id`, `id_consulta`, `campoC`, `campoP`, `descuento`) VALUES ('2', '1', '2', '1500', '0.05');
+INSERT INTO `evento_promociones`.`desc_consultas` (`id`, `id_consulta`, `campoC`, `descuento`) VALUES ('3', '2', '3', '0.03');
+INSERT INTO `evento_promociones`.`desc_consultas` (`id`, `id_consulta`, `campoC`, `descuento`) VALUES ('4', '2', '5', '0.05');
 
 //cupo del evento
 insert into evento_cupo (nombre_evento, cupo_maximo) values ('Evento de Promociones', 45);
