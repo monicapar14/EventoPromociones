@@ -61,4 +61,6 @@ create table desc_Consultas(
     FOREIGN KEY (id_consulta) references consultas(id_consulta)
 );
 
-
+Create table Id_Temp(
+    id_temp INT PRIMARY KEY AUTO_INCREMENT
+);
