@@ -44,6 +44,7 @@ const Servicios = () => {
         obtenerDescuentoS()
     }, [])
 
+    //revisar cuando se quitan todos
     const validaTodas = () => {
         const anyChecked = (document.getElementById('ckbTodos') as HTMLInputElement)?.checked === true;
         
@@ -76,13 +77,6 @@ const Servicios = () => {
         let descuento_total = 0;
         descuentos.forEach((descuento) => {
             console.log(" c " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total + " " + descuento.descuento);
-            /*if((total_seleccionados >= Number(descuento.campoC)) && (descuento.campoP !== null) && (total_precio > Number(descuento.campoP))){
-                descuento_total = descuento.descuento;
-                console.log("sii1 " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total);
-            }else if((total_seleccionados >= Number(descuento.campoC)) && (descuento.campoP === null)){
-                descuento_total = descuento.descuento;
-                console.log("sii " + descuento_total + " " + descuento.descuento);            
-            }*/
             if(total_seleccionados >= Number(descuento.campoC)){
                 if(descuento.campoP !== null){
                     if(total_precio > Number(descuento.campoP)){
@@ -104,6 +98,7 @@ const Servicios = () => {
         });
     }
 
+    //revisar cuando se quita uno
     const seleccionada = (servicio: ServicioConSeleccion, checked: boolean) => {
         const serviciosActualizados = servicios.map(item =>
             item.id_servicio === servicio.id_servicio
@@ -114,6 +109,37 @@ const Servicios = () => {
         setServicios(serviciosActualizados);
         setSeleccionados(seleccionadosActuales);
 
+        const total_seleccionados = serviciosActualizados.length;
+        
+        let total_precio = 0;
+        serviciosActualizados.filter(s => s.seleccionado).forEach(servicio => {
+            total_precio += Number(servicio.precio);
+        })
+        console.log("totl " + total_seleccionados + " precio total " + total_precio);                
+
+        let descuento_total = 0;
+        descuentos.forEach((descuento) => {
+            console.log(" c " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total + " " + descuento.descuento);
+            if(total_seleccionados >= Number(descuento.campoC)){
+                if(descuento.campoP !== null){
+                    if(total_precio > Number(descuento.campoP)){
+                        console.log("sii1 " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total);
+                        if(descuento_total < Number(descuento.descuento)){
+                            descuento_total = descuento.descuento;
+                        }
+                    }
+                }else{
+                    
+                        console.log("sii2 " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total);
+                    if(descuento_total < Number(descuento.descuento)){
+                        descuento_total = descuento.descuento;
+                    }
+                }
+            }
+            console.log("descuento final " + descuento_total);
+
+        });
+
         console.log('Fila seleccionada:', servicio);
         console.log('Servicios seleccionados:', seleccionadosActuales);
     }
@@ -121,7 +147,6 @@ const Servicios = () => {
     return (
         <div className="card" style={{ padding: '1rem 0', maxWidth: '661px', margin: '0 auto', marginTop: '20px'}}>
             <div style={{
-                background: 'var(--color-background-primary)',
                 border: '0.5px solid var(--color-border-tertiary)',
                 borderRadius: '12px',
                 overflow: 'hidden'
