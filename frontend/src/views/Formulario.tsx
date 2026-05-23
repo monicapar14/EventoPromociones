@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import type { DatosIngresados } from "../Interfaces/DatosPersona"
 import type { ChangeEvent, FormEvent} from "react"
 import api from "../api"
 import { useNavigate } from 'react-router-dom'
-
+//import { getIdMax } from "../Interfaces/DatosConfirmacion"
+//
 const Formulario = () => {
 
     const navigate = useNavigate()
@@ -14,6 +15,20 @@ const Formulario = () => {
         email: '',
         fecha_hora: new Date()
     });
+
+    /*const [IdMax, getMax] = useState<getIdMax[]>([]);
+
+    useEffect(() => {
+        const obtenerMax = async () => {
+            try {
+                const response = await api.get('/confirmaciones/getMax')
+                getMax(response.data)
+            } catch (error) {
+                console.error('Error el maximo de las confirmaciones', error)
+            }
+        }
+        obtenerMax()
+    }, [])*/
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({...formData, [e.target.name]: e.target.value})

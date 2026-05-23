@@ -1,41 +1,41 @@
 import { useEffect, useState } from "react"
 import { useLocation } from 'react-router-dom'
 import api from "../api"
-import type { ServiciosObtenidos } from "../Interfaces/serviciosDisponibles"
-import type { DescuentosDisponibles } from "../Interfaces/serviciosDisponibles"
+import type { ProductosObtenidos } from "../Interfaces/productosDisponibles"
+import type { DescuentosDisponibles } from "../Interfaces/productosDisponibles"
 
-type ServicioConSeleccion = ServiciosObtenidos & { seleccionado?: boolean }
+type productoConSeleccion = ProductosObtenidos & { seleccionado?: boolean }
 
-const Servicios = () => {
+const Productos = () => {
     const location = useLocation();
     const foo = (location.state as { foo?: string })?.foo;
-    const [seleccionados, setSeleccionados] = useState<ServicioConSeleccion[]>([]);
+    const [seleccionados, setSeleccionados] = useState<productoConSeleccion[]>([]);
 
     console.log("fff " + foo);
 
     const [descuentos, setDescuentos] = useState<DescuentosDisponibles[]>([]);
-    const [servicios, setServicios] = useState<ServiciosObtenidos[]>([]);
+    const [Productos, setProductos] = useState<ProductosObtenidos[]>([]);
 
     useEffect(() => {
-        const obtenerServicios = async () => {
+        const obtenerProductos = async () => {
             try {
-                const response = await api.get('/servicios')
-                setServicios(response.data)
+                const response = await api.get('/productos')
+                setProductos(response.data)
             } catch (error) {
-                console.error('Error al obtener los servicios:', error)
+                console.error('Error al obtener los Productos:', error)
             }
         }
 
         const obtenerDescuentoS = async () => {
             try {
-                const response = await api.get('/servicios/descuentos')
+                const response = await api.get('/productos/descuentos')
                 setDescuentos(response.data)
             } catch (error) {
-                console.error('Error al obtener los servicios:', error)
+                console.error('Error al obtener los Productos:', error)
             }
         }
 
-        obtenerServicios()
+        obtenerProductos()
         obtenerDescuentoS()
     }, [])
 
@@ -43,30 +43,30 @@ const Servicios = () => {
     const validaTodas = () => {
         const anyChecked = (document.getElementById('ckbTodos') as HTMLInputElement)?.checked === true;
         
-        servicios.forEach((servicio) => {
-            const checkbox = document.getElementById(`servicio_${servicio.id_servicio}`) as HTMLInputElement;
+        Productos.forEach((producto) => {
+            const checkbox = document.getElementById(`producto_${producto.id_producto}`) as HTMLInputElement;
             if (checkbox) {
                 checkbox.checked = anyChecked;
             }
         });
 
-        const serviciosActualizados = servicios.map(servicio => ({
-            ...servicio,
+        const ProductosActualizados = Productos.map(producto => ({
+            ...producto,
             seleccionado: anyChecked
         }));
 
-        setServicios(serviciosActualizados);
+        setProductos(ProductosActualizados);
         
-        let total_seleccionados = serviciosActualizados.length;
+        let total_seleccionados = ProductosActualizados.length;
         
         let total_precio = 0;
-        serviciosActualizados.filter(s => s.seleccionado).forEach(servicio => {
-            total_precio += Number(servicio.precio);
+        ProductosActualizados.filter(s => s.seleccionado).forEach(producto => {
+            total_precio += Number(producto.precio);
         })
         console.log("totl " + total_seleccionados + " precio total " + total_precio);
                 
         
-        console.log("sss " + serviciosActualizados);
+        console.log("sss " + ProductosActualizados);
         console.log('checkbox clickeado - todos marcados:', anyChecked);
 
         let descuento_total = 0;
@@ -99,21 +99,21 @@ const Servicios = () => {
         console.log("descuento final " + descuento_total);
     }
 
-    const seleccionada = (servicio: ServicioConSeleccion, checked: boolean) => {
-        const serviciosActualizados = servicios.map(item =>
-            item.id_servicio === servicio.id_servicio
+    const seleccionada = (producto: ProductosConSeleccion, checked: boolean) => {
+        const ProductosActualizados = Productos.map(item =>
+            item.id_producto === producto.id_producto
             ? { ...item, seleccionado: checked }
             : item
         );
-        const seleccionadosActuales = serviciosActualizados.filter(item => item.seleccionado);
-        setServicios(serviciosActualizados);
+        const seleccionadosActuales = ProductosActualizados.filter(item => item.seleccionado);
+        setProductos(ProductosActualizados);
         setSeleccionados(seleccionadosActuales);
 
-        const total_seleccionados = serviciosActualizados.length;
+        const total_seleccionados = ProductosActualizados.length;
         
         let total_precio = 0;
-        serviciosActualizados.filter(s => s.seleccionado).forEach(servicio => {
-            total_precio += Number(servicio.precio);
+        ProductosActualizados.filter(s => s.seleccionado).forEach(producto => {
+            total_precio += Number(producto.precio);
         })
         console.log("totl " + total_seleccionados + " precio total " + total_precio);                
 
@@ -140,8 +140,8 @@ const Servicios = () => {
 
         });
 
-        console.log('Fila seleccionada:', servicio);
-        console.log('Servicios seleccionados:', seleccionadosActuales);
+        console.log('Fila seleccionada:', producto);
+        console.log('Productos seleccionados:', seleccionadosActuales);
     }
 
     return (
@@ -159,7 +159,7 @@ const Servicios = () => {
                     justifyContent: 'space-between'
                 }}>
                     <p style={{ fontSize: '15px', fontWeight: 500, margin: 0 }}>
-                        Servicios disponibles
+                        Productos disponibles
                     </p>
                     <span style={{
                         fontSize: '12px',
@@ -190,20 +190,20 @@ const Servicios = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {servicios.map(servicio => (
-                            <tr key={servicio.id_servicio} style={{ borderBottom: '0.5px solid var(--color-border-tertiary)' }}>
-                                <td style={{ padding: '9px 16px', color: 'var(--color-text-secondary)' }}>{servicio.id_servicio}</td>
-                                <td style={{ padding: '9px 16px' }}>{servicio.nombre}</td>
-                                <td style={{ padding: '9px 16px', color: 'var(--color-text-secondary)' }}>{servicio.descripcion}</td>
+                        {Productos.map(producto => (
+                            <tr key={producto.id_producto} style={{ borderBottom: '0.5px solid var(--color-border-tertiary)' }}>
+                                <td style={{ padding: '9px 16px', color: 'var(--color-text-secondary)' }}>{producto.id_producto}</td>
+                                <td style={{ padding: '9px 16px' }}>{producto.nombre}</td>
+                                <td style={{ padding: '9px 16px', color: 'var(--color-text-secondary)' }}>{producto.descripcion}</td>
                                 <td style={{ padding: '9px 16px', fontVariantNumeric: 'tabular-nums', color: 'var(--color-text-secondary)' }}>
-                                    Q {Number(servicio.precio).toFixed(2)}
+                                    Q {Number(producto.precio).toFixed(2)}
                                 </td>
                                 <td style={{ padding: '9px 16px', textAlign: 'center' }}>
                                     <input
                                         className="form-check-input"
                                         type="checkbox"
-                                        id={`servicio_${servicio.id_servicio}`}
-                                        onChange={(event) => seleccionada(servicio, event.target.checked)}
+                                        id={`producto_${producto.id_producto}`}
+                                        onChange={(event) => seleccionada(producto, event.target.checked)}
                                         style={{ width: '15px', height: '15px', cursor: 'pointer' }}
                                     />
                                 </td>
@@ -216,4 +216,4 @@ const Servicios = () => {
     )
 }
 
-export default Servicios 
+export default Productos 

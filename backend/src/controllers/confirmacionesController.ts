@@ -4,11 +4,22 @@ import pool from '../db'
 //obtener las confirmaciones que van
 export const getCantConfirmaciones = async (req: Request, res: Response) => {
   try {
-    const [rows] = await pool.query('SELECT count(*) as cantidad FROM confirmacion') // quitar tilde 
+    const [rows] = await pool.query('SELECT count(*) as cantidad FROM confirmacion') 
     res.json(rows)
   } catch (error) {
     console.error('Error al obtener las confirmaciones:', error)
     res.status(500).json({ message: 'Error al obtener las confirmaciones' })
+  }
+}
+
+//obtener el id max
+export const getIdMax = async (req: Request, res: Response) => {
+  try {
+    const [rows] = await pool.query('SELECT max(id_confirmacion) as max FROM evento_promociones.confirmacion') 
+    res.json(rows)
+  } catch (error) {
+    console.error('Error el maximo de las confirmaciones:', error)
+    res.status(500).json({ message: 'Error al obtener el maximo de las confirmaciones' })
   }
 }
 

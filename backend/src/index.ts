@@ -29,9 +29,6 @@ app.use('/api/confirmaciones', confirmacionesRouter)
 //Ruta de cupos
 app.use('/api/cupos', infoEventoRouter)
 
-//Ruta de confirmaciones
-app.use('/api/confirmaciones', confirmaciones)
-
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)
 })
