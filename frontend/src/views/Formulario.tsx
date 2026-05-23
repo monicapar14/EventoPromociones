@@ -1,8 +1,13 @@
 import { useState } from "react"
 import type { DatosIngresados } from "../Interfaces/DatosPersona"
 import type { ChangeEvent, FormEvent} from "react"
+import api from "../api"
+import { useNavigate } from 'react-router-dom'
 
 const Formulario = () => {
+
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState<DatosIngresados>({
         nombres: '',
         apellidos: '',
@@ -16,38 +21,54 @@ const Formulario = () => {
     
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+
+        if(formData.nombres.trim() === '') {
+            alert('Debe ingresar su nombre');
+            return;
+        }else if(formData.apellidos.trim() === '') {
+            alert('Debe ingresar su apellido');
+            return;
+        }else if(formData.email.trim() === '') {
+            alert('Debe ingresar su email');
+            return;
+        }
         console.log(formData);
+
+        navigate('/servicios', { state: {foo: formData }})
     }
 
-    const enviarDatos = async () => {
-        const respuesta = await fetch("http://localhost:8080/api/confirmaciones/agregarConfirmacion", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
+    /*const enviarDatos = async () => {
+        try{
+            const respuesta = await api.post('/confirmaciones/agregarConfirmacion', {
                 nombres: formData.nombres, 
                 apellidos: formData.apellidos, 
                 email: formData.email, 
                 fecha_hora: formData.fecha_hora
             })
-        });
+            console.log(respuesta.data)
+        }catch(error){
+            console.error('Error al enviar los datos:', error);
+        }
 
-        const data = await respuesta.json();
-        console.log(data);
-    };
+    };*/
 
     return (
-        <form action="" className="form" onSubmit={handleSubmit}>
-            <label>Nombre:</label>
-            <input onChange = {handleInputChange} value={formData.nombres} type="text" placeholder="Ingrese su nombre"  name="nombres"/>
-            <label>Apellidos:</label>
-            <input onChange = {handleInputChange} type="text" placeholder="Ingrese sus apellidos" value={formData.apellidos}  name="apellidos"/>
-            <label>Email:</label>
-            <input onChange = {handleInputChange} type="email" placeholder="Ingrese su email" value={formData.email}  name="email"/>
+        <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+                <label className="form-label">Nombres:</label>
+                <input onChange = {handleInputChange} value={formData.nombres} type="text" className="form-control" name="nombres"/>
+            </div>
+            <div className="mb-3">
+                <label className="form-label">Apellidos:</label>
+                <input onChange = {handleInputChange} value={formData.apellidos} type="text" className="form-control" name="apellidos"/>
+            </div>
+            <div className="mb-3">
+                <label className="form-label">Email:</label>
+                <input onChange = {handleInputChange} value={formData.email} type="email" className="form-control" name="email"/>
+            </div>
             <label>Fecha y Hora:</label>
-            <input onChange = {handleInputChange} type="datetime-local"  name="fecha"/>                
-            <button onClick={enviarDatos} type="submit" className="btn btn-primary">Confirmar</button>
+            <input onChange = {handleInputChange} type="datetime-local"  name="fecha"/>             
+            <button type="submit" className="btn btn-primary">Siguiente</button>
         </form>
     )
 }

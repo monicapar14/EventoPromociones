@@ -16,10 +16,6 @@ export const agregarConfirmacion = async (req: Request, res: Response) => {
   try {
     const { nombres, apellidos, email, fecha_hora } = req.body
 
-    if (!nombres || !apellidos || !email) {
-      return res.status(400).json({ message: 'Faltan campos obligatorios' })
-    }
-
     const fechaConfirmacion = fecha_hora ? new Date(fecha_hora) : new Date()
     const [rows] = await pool.query(
       'INSERT INTO confirmacion (nombres, apellidos, email, fecha_confirmacion, descuento_servicio) VALUES (?, ?, ?, ?, ?)',
