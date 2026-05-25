@@ -27,7 +27,43 @@ const Servicios = () => {
     
     const [servicios, setServicios] = useState<ServicioConSeleccion[]>([]);
 
-    const [obtenidos, setObtenidos] = useState<ObtenidosSeleccionados[]>([])
+    const [obtenidos, setObtenidos] = useState<ObtenidosSeleccionados[]>([]);
+
+    const calcularDescuento = (
+        serviciosActualizados: ServicioConSeleccion[]
+    ) => {
+
+        const totalSeleccionados = serviciosActualizados.filter(s => s.seleccionado).length;
+
+        let totalPrecio = 0;
+
+        serviciosActualizados
+            .filter(s => s.seleccionado)
+            .forEach(servicio => {
+                totalPrecio += Number(servicio.precio);
+            });
+
+        let descuentoCalculado = 0;
+
+        descuentos.forEach((descuento) => {
+            if(totalSeleccionados >= Number(descuento.campoC)) {
+                if(descuento.campoP !== null) {
+
+                    if(totalPrecio > Number(descuento.campoP)) {
+                        if(descuentoCalculado < Number(descuento.descuento)) {
+                            descuentoCalculado = Number(descuento.descuento);
+                        }
+                    }
+                } else {
+                    if(descuentoCalculado < Number(descuento.descuento)) {
+                        descuentoCalculado = Number(descuento.descuento);
+                    }
+                }
+            }
+        });
+
+        return descuentoCalculado;
+    }
 
     useEffect(() => {
         if(id_Sesion) {
@@ -72,6 +108,9 @@ const Servicios = () => {
                 seleccionado: obtenidos.some(o => o.id_servicio === servicio.id_servicio)
             }))
             setServicios(serviciosActualizados)
+            const seleccionadosIniciales = serviciosActualizados.filter(s => s.seleccionado)
+            setSeleccionados(seleccionadosIniciales)
+            
             setSeleccionados(serviciosActualizados.filter(s => s.seleccionado))
         }
     }, [servicios.length, obtenidos.length])
@@ -114,28 +153,10 @@ const Servicios = () => {
             setDescuento_total(0);
         }
 
-        descuentos.forEach((descuento) => {
-            console.log(" c " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total + " " + descuento.descuento);
-            if(total_seleccionados >= Number(descuento.campoC)){
-                if(descuento.campoP !== null){
-                    if(total_precio > Number(descuento.campoP)){
-                        console.log("sii1 " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total);
-                        if(descuento_total < Number(descuento.descuento)){
-                            setDescuento_total(Number(descuento.descuento));
-                        }
-                    }
-                }else{
-                    
-                    console.log("sii2 " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total);
-                    if(descuento_total < Number(descuento.descuento)){
-                        setDescuento_total(Number(descuento.descuento));
-                    }
-                }
-            }else{
-                setDescuento_total(0);
-            }
-        });
-        console.log("descuento final " + descuento_total);
+        const descuentoCalculado = calcularDescuento(serviciosActualizados);
+        setDescuento_total(descuentoCalculado);
+
+        console.log("descuento final " + descuentoCalculado);
     }
 
     const seleccionada = (servicio: ServicioConSeleccion, checked: boolean) => {
@@ -157,28 +178,10 @@ const Servicios = () => {
         })
         console.log("totl " + total_seleccionados + " precio total " + total_precio);                
 
-        descuentos.forEach((descuento) => {
-            console.log(" c " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total + " " + descuento.descuento);
-            if(Number(total_seleccionados) >= Number(descuento.campoC)){
-                if(descuento.campoP !== null){
-                    if(total_precio > Number(descuento.campoP)){
-                        console.log("sii1 " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total);
-                        if(descuento_total < Number(descuento.descuento)){
-                            setDescuento_total(Number(descuento.descuento));
-                        }
-                    }
-                }else{
-                    console.log("sii2 " + total_seleccionados + " " + descuento.campoC + " " + total_precio + " " + descuento.campoP + " " +descuento_total);
-                    if(descuento_total < Number(descuento.descuento)){
-                        setDescuento_total(Number(descuento.descuento));
-                    }
-                }
-            }else{
-                setDescuento_total(0);
-            }
-            console.log("descuento final " + descuento_total);
+        const descuentoCalculado = calcularDescuento(serviciosActualizados);
+        setDescuento_total(descuentoCalculado);
 
-        });
+        console.log("descuento final " + descuentoCalculado);
 
         console.log('Fila seleccionada:', servicio);
         console.log('Servicios seleccionados:', seleccionadosActuales);
@@ -188,7 +191,8 @@ const Servicios = () => {
         e.preventDefault();
 
         navigate('/productos', { state: {foo: id_Sesion }})
-        enviarDatos(descuento_total);
+        const descuentoCalculado = calcularDescuento(servicios);
+        enviarDatos(descuentoCalculado);
     }
 
     const enviarDatos = async (descuento: number) => {
