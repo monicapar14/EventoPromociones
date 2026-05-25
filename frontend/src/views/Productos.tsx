@@ -176,6 +176,8 @@ const Productos = () => {
 
         await enviarDatos();
 
+        await new Promise(r => setTimeout(r, 300))
+
         navigate('/confirmacion', { state: { foo: id_Sesion } });
     }
 
