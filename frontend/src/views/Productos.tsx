@@ -5,7 +5,7 @@ import api from "../api"
 import type { ProductosObtenidos } from "../Interfaces/productosDisponibles"
 import type { DescuentosDisponibles } from "../Interfaces/productosDisponibles"
 import { useNavigate } from 'react-router-dom'
-import type { ObtenidosSeleccionados } from '../Interfaces/productossDisponibles'
+import type { ObtenidosSeleccionados } from '../Interfaces/productosDisponibles'
 import Layout from '../components/Layout'
 
 type ProductoConSeleccion = ProductosObtenidos & { seleccionado?: boolean }
@@ -21,7 +21,7 @@ const Productos = () => {
     const [seleccionados, setSeleccionados] = useState<ProductoConSeleccion[]>([]);    
 
     const [descuentos, setDescuentos] = useState<DescuentosDisponibles[]>([]);
-    const [productos, setProductos] = useState<ProductosObtenidos[]>([]);
+    const [productos, setProductos] = useState<ProductoConSeleccion[]>([]);
 
     const [descuento_total, setDescuento_total] = useState(0)
 

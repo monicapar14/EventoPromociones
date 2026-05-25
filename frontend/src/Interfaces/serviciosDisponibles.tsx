@@ -16,3 +16,9 @@ export interface ObtenidosSeleccionados {
   nombre: string;
   precio: number;
 }
+
+export interface ServiciosSeleccionados {
+  id_servicio: number;
+  nombre: string;
+  precio: number;
+}

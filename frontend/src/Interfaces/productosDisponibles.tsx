@@ -16,3 +16,9 @@ export interface ObtenidosSeleccionados {
   nombre: string;
   precio: number;
 }
+
+export interface ProductosSeleccionados {
+  id_producto: number;
+  nombre: string;
+  precio: number;
+}

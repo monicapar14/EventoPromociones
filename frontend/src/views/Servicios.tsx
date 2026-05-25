@@ -10,6 +10,7 @@ import Layout from '../components/Layout'
 
 type ServicioConSeleccion = ServiciosObtenidos & { seleccionado?: boolean }
 
+
 const Servicios = () => {
 
     const navigate = useNavigate()
@@ -20,10 +21,11 @@ const Servicios = () => {
 
     const [seleccionados, setSeleccionados] = useState<ServicioConSeleccion[]>([]);    
 
-    const [descuentos, setDescuentos] = useState<DescuentosDisponibles[]>([]);
-    const [servicios, setServicios] = useState<ServiciosObtenidos[]>([]);
+    const [descuentos, setDescuentos] = useState<DescuentosDisponibles[]>([]);    
 
     const [descuento_total, setDescuento_total] = useState(0)
+    
+    const [servicios, setServicios] = useState<ServicioConSeleccion[]>([]);
 
     const [obtenidos, setObtenidos] = useState<ObtenidosSeleccionados[]>([])
 
