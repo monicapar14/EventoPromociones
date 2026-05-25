@@ -10,3 +10,9 @@ export interface DescuentosDisponibles {
   campoP: number;
   descuento: number;
 }
+
+export interface ObtenidosSeleccionados {
+  id_servicio: number,
+  nombre: string;
+  precio: number;
+}

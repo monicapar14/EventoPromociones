@@ -22,7 +22,8 @@ Create table Confirmacion(
     email VARCHAR(255) NOT NULL,
     fecha_confirmacion DATETIME,
     descuento_servicio DECIMAL(10, 2),
-    descuento_producto DECIMAL(10, 2)
+    descuento_producto DECIMAL(10, 2),
+    estado integer
 );  
 
 Create table Servicios_seleccionados(
