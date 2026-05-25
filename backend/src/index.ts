@@ -5,7 +5,6 @@ import pool from './db'
 import serviciosRouter from './routes/servicios'
 import productosRouter from './routes/productos'
 import confirmacionesRouter from './routes/confirmaciones'
-import confirmaciones from './routes/confirmaciones'
 
 dotenv.config()
 
