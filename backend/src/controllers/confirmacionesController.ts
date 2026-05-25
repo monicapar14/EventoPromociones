@@ -18,7 +18,7 @@ export const getCantConfirmaciones = async (req: Request, res: Response) => {
 //obtener cupo
 export const getcupo = async (req: Request, res: Response) => {
   try {
-    const [rows] = await pool.query('SELECT cupo_maximo FROM Evento_cupo WHERE id_evento = 1') 
+    const [rows] = await pool.query('SELECT cupo_maximo FROM Evento_Cupo WHERE id_evento = 1') 
     res.json(rows)
   } catch (error) {
     console.error('Error al obtener el cupo:', error)
@@ -135,7 +135,7 @@ export const updateEstado = async (req: Request, res: Response) => {
       'SELECT COUNT(*) as cantidad FROM Confirmacion WHERE estado = 1'
     )
     const [cupoRows]: any = await pool.query(
-      'SELECT cupo_maximo FROM Evento_cupo WHERE id_evento = 1'
+      'SELECT cupo_maximo FROM Evento_Cupo WHERE id_evento = 1'
     )
 
     const cantidad = Number(cantidadRows[0].cantidad)

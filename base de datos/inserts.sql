@@ -43,13 +43,13 @@ INSERT INTO consultas (id_consulta, nombre_consulta) VALUES (1, 'Servicio');
 INSERT INTO consultas (id_consulta, nombre_consulta) VALUES (2, 'Producto');
 
 //descuentos en los servicios y productos
-INSERT INTO desc_consultas (id, id_consulta, campoC, descuento) VALUES ('1', '1', '2',  '0.03');
-INSERT INTO desc_consultas (id, id_consulta, campoC, campoP, descuento) VALUES ('2', '1', '2', '1500', '0.05');
-INSERT INTO desc_consultas (id, id_consulta, campoC, descuento) VALUES ('3', '2', '3', '0.03');
-INSERT INTO desc_consultas (id, id_consulta, campoC, descuento) VALUES ('4', '2', '5', '0.05');
+INSERT INTO desc_Consultas (id, id_consulta, campoC, descuento) VALUES ('1', '1', '2',  '0.03');
+INSERT INTO desc_Consultas (id, id_consulta, campoC, campoP, descuento) VALUES ('2', '1', '2', '1500', '0.05');
+INSERT INTO desc_Consultas (id, id_consulta, campoC, descuento) VALUES ('3', '2', '3', '0.03');
+INSERT INTO desc_Consultas (id, id_consulta, campoC, descuento) VALUES ('4', '2', '5', '0.05');
 
 //cupo del evento
-insert into Evento_cupo (nombre_evento, cupo_maximo) values ('Evento de Promociones', 45);
+insert into Evento_Cupo (nombre_evento, cupo_maximo) values ('Evento de Promociones', 45);
 
 //confirmaciones
 INSERT INTO Confirmacion (id_confirmacion, nombres, apellidos, email,fecha_confirmacion, descuento_servicio)VALUES('1', 'Mónica', 'Par', 'monicapar14@gmail.com','2026-05-21', 0.03);
