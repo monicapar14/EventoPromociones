@@ -128,6 +128,8 @@ const Servicios = () => {
             seleccionado: anyChecked
         }));
 
+        setServicios(serviciosActualizados);
+        
         setSeleccionados(serviciosActualizados);
         
         let total_seleccionados = serviciosActualizados.length;
