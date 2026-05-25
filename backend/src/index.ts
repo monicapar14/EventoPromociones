@@ -1,7 +1,6 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import pool from './db'
 import serviciosRouter from './routes/servicios'
 import productosRouter from './routes/productos'
 import confirmacionesRouter from './routes/confirmaciones'
