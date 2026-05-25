@@ -22,8 +22,6 @@ const Servicios = () => {
     const [seleccionados, setSeleccionados] = useState<ServicioConSeleccion[]>([]);    
 
     const [descuentos, setDescuentos] = useState<DescuentosDisponibles[]>([]);    
-
-    const [descuento_total, setDescuento_total] = useState(0)
     
     const [servicios, setServicios] = useState<ServicioConSeleccion[]>([]);
 
@@ -116,7 +114,6 @@ const Servicios = () => {
     }, [servicios.length, obtenidos.length])
 
     const validaTodas = () => {
-        setDescuento_total(0);
         const anyChecked = (document.getElementById('ckbTodos') as HTMLInputElement)?.checked === true;
         
         servicios.forEach((servicio) => {
@@ -149,18 +146,13 @@ const Servicios = () => {
             total_seleccionados = 0;
             setSeleccionados([]);
         }
-        if(total_seleccionados === 0 && anyChecked === false){
-            setDescuento_total(0);
-        }
 
         const descuentoCalculado = calcularDescuento(serviciosActualizados);
-        setDescuento_total(descuentoCalculado);
 
         console.log("descuento final " + descuentoCalculado);
     }
 
     const seleccionada = (servicio: ServicioConSeleccion, checked: boolean) => {
-        setDescuento_total(0);
         const serviciosActualizados = servicios.map(item =>
             item.id_servicio === servicio.id_servicio
             ? { ...item, seleccionado: checked }
@@ -179,7 +171,6 @@ const Servicios = () => {
         console.log("totl " + total_seleccionados + " precio total " + total_precio);                
 
         const descuentoCalculado = calcularDescuento(serviciosActualizados);
-        setDescuento_total(descuentoCalculado);
 
         console.log("descuento final " + descuentoCalculado);
 
