@@ -9,19 +9,15 @@ RUN npm install
 
 COPY . .
 
-# Construye la versión de producción de React
 RUN npm run build
 
-# Etapa 2 - Servir el proyecto con Nginx
-# Nginx es un servidor web muy liviano y rápido
+# Etapa 2 - Servir con Nginx
 FROM nginx:alpine
 
-# Copia los archivos construidos al servidor Nginx
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Configuración de Nginx para que funcione con React Router
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/sh", "-c", "envsubst '$PORT' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
