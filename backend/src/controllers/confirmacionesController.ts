@@ -7,7 +7,7 @@ import { guardarLog } from '../logs'
 //obtener las confirmaciones que van
 export const getCantConfirmaciones = async (req: Request, res: Response) => {
   try {
-    const [rows] = await pool.query('SELECT count(*) as cantidad FROM confirmacion WHERE estado = 1') 
+    const [rows] = await pool.query('SELECT count(*) as cantidad FROM Confirmacion WHERE estado = 1') 
     res.json(rows)
   } catch (error) {
     console.error('Error al obtener las confirmaciones:', error)
@@ -18,7 +18,7 @@ export const getCantConfirmaciones = async (req: Request, res: Response) => {
 //obtener cupo
 export const getcupo = async (req: Request, res: Response) => {
   try {
-    const [rows] = await pool.query('SELECT cupo_maximo FROM evento_promociones.evento_cupo WHERE id_evento = 1') 
+    const [rows] = await pool.query('SELECT cupo_maximo FROM Evento_cupo WHERE id_evento = 1') 
     res.json(rows)
   } catch (error) {
     console.error('Error al obtener el cupo:', error)
@@ -33,7 +33,7 @@ export const getConfirmaciones = async (req: Request, res: Response) => {
     const { id } = req.params
 
     const [confirmacion]: any = await pool.query(
-      'SELECT * FROM confirmacion WHERE id_confirmacion = ?',
+      'SELECT * FROM Confirmacion WHERE id_confirmacion = ?',
       [id]
     )
 
@@ -62,7 +62,7 @@ export const agregarConfirmacion = async (req: Request, res: Response) => {
 
     const fechaConfirmacion = fecha_hora ? new Date(fecha_hora) : new Date()
     const [rows] = await pool.query(
-      'INSERT INTO confirmacion (id_confirmacion, nombres, apellidos, email, fecha_confirmacion, descuento_servicio, descuento_producto, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO Confirmacion (id_confirmacion, nombres, apellidos, email, fecha_confirmacion, descuento_servicio, descuento_producto, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
       [id_confirmacion, nombres, apellidos, email, fechaConfirmacion, descuento_servicio, descuento_producto, estado]
     )
 
@@ -81,7 +81,7 @@ export const updateDatos = async (req: Request, res: Response) => {
     const fechaConfirmacion = fecha_hora ? new Date(fecha_hora) : new Date()
 
     const [rows] = await pool.query(
-      'UPDATE confirmacion set nombres = ?, apellidos = ?, email = ?, fecha_confirmacion = ? WHERE id_confirmacion = ?',
+      'UPDATE Confirmacion set nombres = ?, apellidos = ?, email = ?, fecha_confirmacion = ? WHERE id_confirmacion = ?',
       [nombres, apellidos, email, fechaConfirmacion, id_confirmacion]
     )
 
@@ -98,7 +98,7 @@ export const updateDescuentoS = async (req: Request, res: Response) => {
     const { descuento_servicio, id_confirmacion} = req.body
 
     const [rows] = await pool.query(
-      'UPDATE confirmacion SET descuento_servicio = ? WHERE id_confirmacion = ?',
+      'UPDATE Confirmacion SET descuento_servicio = ? WHERE id_confirmacion = ?',
       [descuento_servicio, id_confirmacion]
     )
 
@@ -115,7 +115,7 @@ export const updateDescuentoP = async (req: Request, res: Response) => {
     const { descuento_producto, id_confirmacion} = req.body
 
     const [rows] = await pool.query(
-      'UPDATE confirmacion SET descuento_producto = ? WHERE id_confirmacion = ?',
+      'UPDATE Confirmacion SET descuento_producto = ? WHERE id_confirmacion = ?',
       [descuento_producto, id_confirmacion]
     )
 
@@ -132,10 +132,10 @@ export const updateEstado = async (req: Request, res: Response) => {
     const { estado, id_confirmacion } = req.body
 
     const [cantidadRows]: any = await pool.query(
-      'SELECT COUNT(*) as cantidad FROM confirmacion WHERE estado = 1'
+      'SELECT COUNT(*) as cantidad FROM Confirmacion WHERE estado = 1'
     )
     const [cupoRows]: any = await pool.query(
-      'SELECT cupo_maximo FROM evento_promociones.evento_cupo WHERE id_evento = 1'
+      'SELECT cupo_maximo FROM Evento_cupo WHERE id_evento = 1'
     )
 
     const cantidad = Number(cantidadRows[0].cantidad)
@@ -148,25 +148,25 @@ export const updateEstado = async (req: Request, res: Response) => {
     }
 
     const [rows] = await pool.query(
-      'UPDATE confirmacion SET estado = ? WHERE id_confirmacion = ?',
+      'UPDATE Confirmacion SET estado = ? WHERE id_confirmacion = ?',
       [estado, id_confirmacion]
     )
 
     const [confirmacion]: any = await pool.query(
-      'SELECT * FROM confirmacion WHERE id_confirmacion = ?',
+      'SELECT * FROM Confirmacion WHERE id_confirmacion = ?',
       [id_confirmacion]
     )
 
     const [servicios]: any = await pool.query(
-      `SELECT s.nombre, s.precio FROM servicios s 
-      INNER JOIN servicios_seleccionados ss ON s.id_servicio = ss.id_servicio 
+      `SELECT s.nombre, s.precio FROM Servicios s 
+      INNER JOIN Servicios_seleccionados ss ON s.id_servicio = ss.id_servicio 
       WHERE ss.id_confirmacion = ?`,
       [id_confirmacion]
     )
 
     const [productos]: any = await pool.query(
-      `SELECT p.nombre, p.precio FROM productos p 
-      INNER JOIN productos_seleccionados ps ON p.id_producto = ps.id_producto 
+      `SELECT p.nombre, p.precio FROM Productos p 
+      INNER JOIN Productos_seleccionados ps ON p.id_producto = ps.id_producto 
       WHERE ps.id_confirmacion = ?`,
       [id_confirmacion]
     )
