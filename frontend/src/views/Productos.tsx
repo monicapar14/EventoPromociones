@@ -171,11 +171,12 @@ const Productos = () => {
         console.log('productos seleccionados:', seleccionadosActuales);
     }
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        navigate('/confirmacion', { state: {foo: id_Sesion }})
-        enviarDatos();
+        await enviarDatos();
+
+        navigate('/confirmacion', { state: { foo: id_Sesion } });
     }
 
     const enviarDatos = async () => {
